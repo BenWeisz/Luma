@@ -1,0 +1,2 @@
+export PYTHONPATH=./luma
+python3 -m unittest discover -s lumatests/world -p "*_test.py" -v

@@ -1,0 +1,48 @@
+{
+    "name": "Test World",
+    "entities": [
+        {
+            "type": "Sphere",
+            "name": "Main Sphere",
+            "point": [0, 0, 1],
+            "radius": 1,
+            "material": 1
+        },
+        {
+            "type": "Plane",
+            "name": "World Floor",
+            "point": [0, 0, 0],
+            "normal": [0, 0, 1],
+            "material": 2
+        },
+        {
+            "type": "DirectionalLight",
+            "name": "Main Light",
+            "direction": [0, 0, 1],
+            "material": 0
+        }
+    ],
+    "materials": [
+        {
+            "name": "White",
+            "id": 0,
+            "i_ambient": [255, 255, 255],
+            "i_diffuse": [255, 255, 255],
+            "i_specular": [255, 255, 255]
+        },
+        {
+            "name": "Blue",
+            "id": 1,
+            "i_ambient": [0, 0, 255],
+            "i_diffuse": [0, 0, 255],
+            "i_specular": [0, 0, 255]
+        },
+        {
+            "name": "Yellow",
+            "id": 2,
+            "i_ambient": [255, 255, 0],
+            "i_diffuse": [255, 255, 0],
+            "i_specular": [255, 255, 0]
+        }
+    ]
+}
