@@ -1,5 +1,5 @@
 from unittest import TestCase
-from luma.world.entity import DirectionalLight, Plane, Sphere
+from luma.world.entity.entity_types import DirectionalLight, Plane, Sphere
 from luma.world.material import Material
 
 def get_test_material():

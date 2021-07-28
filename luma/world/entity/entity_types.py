@@ -1,12 +1,13 @@
 from typing import Iterable
 
+from luma.world.entity.entity import Entity
 from luma.world.material import Material
 
-class Entity:
-    def __init__(self, name: str) -> None:
-        self.name = name
-
 class DirectionalLight(Entity):
+    name: str
+    direction: Iterable
+    material: Material
+
     def __init__(
         self,
         name: str,
@@ -18,6 +19,11 @@ class DirectionalLight(Entity):
         self.material = material
 
 class Plane(Entity):
+    name: str
+    point: Iterable
+    normal: Iterable
+    material: Material
+
     def __init__(
         self,
         name: str,
@@ -31,6 +37,11 @@ class Plane(Entity):
         self.material = material
 
 class Sphere(Entity):
+    name: str
+    point: Iterable
+    radius: float
+    material: Material
+
     def __init__(
         self,
         name: str,

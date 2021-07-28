@@ -3,7 +3,7 @@ from luma.image.image import Image
 class PPMWriter():
     @staticmethod
     def write(path: str, image: Image) -> None:
-        with open(f"out/{path}", "wb") as out_file:
+        with open(f"data/out/{path}", "wb") as out_file:
             file_header = f"P6\n{image.width}\n{image.height}\n255\n"
             
             header_data = [ord(c) for c in file_header]

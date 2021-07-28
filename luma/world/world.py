@@ -1,4 +1,4 @@
-from luma.world.entity import Entity
+from luma.world.entity.entity import Entity
 from luma.world.material import Material
 
 class World():
