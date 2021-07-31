@@ -2,7 +2,7 @@ from luma.world.entity.entity import Entity
 from luma.world.material import Material
 
 class World():
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
         self.entities = []
         self.materials = []

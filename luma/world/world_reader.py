@@ -5,7 +5,7 @@ import numpy as np
 from luma.world.entity.entity import Entity
 from luma.world.entity.entity_types import Plane, Sphere, DirectionalLight
 from luma.world.material import Material
-from luma.world.camera import Camera
+from luma.light.camera import Camera
 
 from .world import World
 
