@@ -2,7 +2,7 @@ import numpy as np
 from unittest import TestCase
 from math import sin, cos
 
-from luma.util.geometry import getRotationMatrix, asHomogeneous
+from luma.util.geometry import getRotationMatrix, asHomogeneous, asCoordinate
 
 class RotationMatTest(TestCase):
     def test_rotateAll90(self):
@@ -36,5 +36,14 @@ class AsHomogeneousTest(TestCase):
         self.assertListEqual(
             list(homogeneous_vec),
             [1.0, 2.0, 3.0, 1.0]
+        )
+
+class AsCoordinateTest(TestCase):
+    def test_asCoordinate(self):
+        vec = np.array([2, 2, 2, 2])
+        normal_vec = asCoordinate(vec)
+        self.assertListEqual(
+            list(normal_vec),
+            [1, 1, 1]
         )
         

@@ -29,3 +29,11 @@ def asHomogeneous(vec: np.array) -> np.array:
     """
 
     return np.append(vec, 1.0)
+
+def asCoordinate(vec: np.array) -> np.array:
+    """ Given a 4D homogeneous coordinated return
+        the normal 3D vector.
+    """
+
+    assert len(vec) == 4
+    return vec[:3] / vec[3]
