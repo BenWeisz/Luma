@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, List
 import numpy as np
 
 from luma.world.entity.entity import Entity

@@ -88,3 +88,7 @@ class SphereTest(TestCase):
             self.sphere.material,
             self.material
         )
+        
+    def test_intersection(self):
+        # Need to implement this next
+        pass
