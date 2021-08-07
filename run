@@ -2,10 +2,10 @@ if [ $1 ]
 then
     if [ $1 == "app" ]
     then
-        python main.py
+        python -B main.py
     elif [ $1 == "test" ]
     then
-        python -m unittest discover -p "*_test.py" -v
+        python -B -m unittest discover -p "*_test.py" -v
     fi
 else
     echo "No default action provided"

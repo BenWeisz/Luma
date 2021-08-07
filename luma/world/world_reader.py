@@ -66,7 +66,7 @@ class WorldReader():
             return Camera(
                 name="Main Camera",
                 point=np.array(entity["point"]),
-                direction=np.array(entity["direction"]),
+                xzx=np.array(entity["xzx"]),
                 focal_length=entity["focalLength"],
                 window_width=entity["windowWidth"],
                 window_height=entity["windowHeight"],

@@ -52,3 +52,15 @@ class CameraTest(TestCase):
             self.camera.screen_height,
             5
         )
+
+    def test_camera_matrix(self):
+        camera_mat = self.camera.camera_matrix
+        row1_sum = np.sum(np.array([-0.41614684, -0.4912955, 0.7651474, 1]) - camera_mat[0])
+        row2_sum = np.sum(np.array([-0.90019763, 0.10384657, -0.42291857, 2]) - camera_mat[1])
+        row3_sum = np.sum(np.array([0.12832006, -0.8647801, -0.48547846, 3]) - camera_mat[2])
+        row4_sum = np.sum(np.array([0, 0, 0, 1]) - camera_mat[3])
+
+        self.assertAlmostEqual(row1_sum, 0)
+        self.assertAlmostEqual(row2_sum, 0)
+        self.assertAlmostEqual(row3_sum, 0)
+        self.assertAlmostEqual(row4_sum, 0)

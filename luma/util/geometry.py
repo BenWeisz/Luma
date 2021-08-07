@@ -22,3 +22,10 @@ def getRotationMatrix(rot: Iterable[float]) -> np.array:
     row3 = [sa*sb, (ca*sg) + (cb*cg*sa), (ca*cg) - (cb*sa*sg)]
 
     return np.array([row1, row2, row3])
+
+def asHomogeneous(vec: np.array) -> np.array:
+    """ Given 3D coordinates, generate the 4D homogeneous
+        coordinates.
+    """
+
+    return np.append(vec, 1.0)

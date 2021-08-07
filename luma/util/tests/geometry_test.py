@@ -2,7 +2,7 @@ import numpy as np
 from unittest import TestCase
 from math import sin, cos
 
-from luma.util.geometry import getRotationMatrix
+from luma.util.geometry import getRotationMatrix, asHomogeneous
 
 class RotationMatTest(TestCase):
     def test_rotateAll90(self):
@@ -28,3 +28,13 @@ class RotationMatTest(TestCase):
         self.assertAlmostEqual(rotated_point[0], cos(pi_over_4))
         self.assertAlmostEqual(rotated_point[1], sin(pi_over_4))
         self.assertAlmostEqual(rotated_point[2], 0)
+
+class AsHomogeneousTest(TestCase):
+    def test_asHomogeneous(self):
+        vec = np.array([1.0, 2.0, 3.0])
+        homogeneous_vec = asHomogeneous(vec)
+        self.assertListEqual(
+            list(homogeneous_vec),
+            [1.0, 2.0, 3.0, 1.0]
+        )
+        

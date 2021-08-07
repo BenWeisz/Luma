@@ -3,6 +3,7 @@ import numpy as np
 
 from luma.world.entity.entity import Entity
 from luma.light.ray import Ray
+from luma.util.geometry import getRotationMatrix
 
 class Camera(Entity):
     name: str
@@ -25,10 +26,10 @@ class Camera(Entity):
         self.point = np.array(point)
         self.xzx = np.array(xzx)
         self.focal_length = focal_length
-        self.window_width = window_width
-        self.window_height = window_height
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.window_width = int(window_width)
+        self.window_height = int(window_height)
+        self.screen_width = float(screen_width)
+        self.screen_height = float(screen_height)
 
     def spawnCameraSpaceRays(self) -> Iterable[Ray]:
         """ Spawn a set of camera space rays, corresponding
@@ -39,6 +40,7 @@ class Camera(Entity):
             screen_height.
         """
 
+        camera_mat = self.camera_matrix
         rays = []
         for y in range(self.window_height):
             for x in range(self.window_width):
@@ -49,8 +51,9 @@ class Camera(Entity):
                 y_p = (step_v / 2.0) + (y * step_v) - (self.screen_height / 2.0)
 
                 ray = Ray(
-                    np.array([0, 0, 0]),
-                    np.array([x_p, y_p, self.focal_length])
+                    start=np.array([0, 0, 0]),
+                    end=np.array([x_p, y_p, self.focal_length]),
+                    camera_mat=camera_mat
                 )
 
                 rays.append(ray)
@@ -58,11 +61,17 @@ class Camera(Entity):
         return rays
 
     @property
-    def cameraMatrix(self):
+    def camera_matrix(self):
         """ Generate the camera matrix corresponding
             to the camera parameters.
+
+            The camera matrix is a 4D affine matrix that
+            transforms homogeneous coordinates in camera
+            space to world space.
         """
 
-        pass
-
-        
+        rotation_mat = getRotationMatrix(self.xzx)
+        camera_mat = np.eye(4)
+        camera_mat[:3, :3] = rotation_mat
+        camera_mat[:3, 3:] = self.point.reshape((3, 1))
+        return camera_mat
