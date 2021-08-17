@@ -1,6 +1,10 @@
 from unittest import TestCase
+import numpy as np
+
 from luma.world.entity.entity_types import DirectionalLight, Plane, Sphere
 from luma.world.material import Material
+from luma.light.ray import Ray
+from luma.light.camera import Camera
 
 def get_test_material():
     return Material(
@@ -36,29 +40,85 @@ class DirectionalLightTest(TestCase):
 class PlaneTest(TestCase):
     def setUp(self):
         self.material = get_test_material()
-        self.plane = Plane(
+        self.plane1 = Plane(
             name="Test Plane",
             point=[1, 2, 3],
             normal=[4, 5, 6],
             material=self.material
         )
 
+        self.plane2 = Plane(
+            name="Simple Plane",
+            point=[0, 0, 0],
+            normal=[0, 0, 1],
+            material=self.material
+        )
+
+        self.camera = Camera(
+            name="Main Camera",
+            focal_length=1,
+            point=[0, 0, 0],
+            xzx=[0, 0, 0],
+            window_width=640,
+            window_height=480,
+            screen_width=1,
+            screen_height=1,
+        )
+
+        camera_matrix = self.camera.camera_matrix
+
+        self.ray = Ray(
+            start=[2, 0, 0],
+            end=[1, 0, 0],
+            camera_mat=camera_matrix
+        )
+
+        self.ray_no_intersect = Ray(
+            start=[0, 0, 1],
+            end=[2, 0, 1],
+            camera_mat=camera_matrix
+        )
+
+        self.ray_inf_intersect = Ray(
+            start=[0, 0, 0],
+            end=[1, 0, 0],
+            camera_mat=camera_matrix
+        )
+
     def test_init(self):
         self.assertEqual(
-            self.plane.name,
+            self.plane1.name,
             "Test Plane"
         )
         self.assertListEqual(
-            self.plane.point,
+            list(self.plane1.point),
             [1, 2, 3]
         )
         self.assertListEqual(
-            self.plane.normal,
+            list(self.plane1.normal),
             [4, 5, 6]
         )
         self.assertEqual(
-            self.plane.material,
+            self.plane1.material,
             self.material
+        )
+
+    def test_simple_intersect(self):
+        self.assertListEqual(
+            self.plane1.intersect(self.ray),
+            [-6.0]
+        )
+
+    def test_no_intersect(self):
+        self.assertListEqual(
+            self.plane2.intersect(self.ray_no_intersect),
+            []
+        )
+
+    def test_inf_intersect(self):
+        self.assertListEqual(
+            self.plane2.intersect(self.ray_inf_intersect),
+            [np.inf]
         )
 
 class SphereTest(TestCase):
@@ -69,6 +129,29 @@ class SphereTest(TestCase):
             point=[1, 2, 3],
             radius=4,
             material=self.material
+        )
+        self.center_sphere = Sphere(
+            "Test Sphere",
+            point=[0, 0, 0],
+            radius=1,
+            material=self.material
+        )
+
+        self.camera = Camera(
+            name="Main Camera",
+            focal_length=1,
+            point=[0, 0, 0],
+            xzx=[0, 0, 0],
+            window_width=640,
+            window_height=480,
+            screen_width=1,
+            screen_height=1,
+        )
+
+        self.ray = Ray(
+            start=[2, 0, 0],
+            end=[1, 0, 0],
+            camera_mat=self.camera.camera_matrix
         )
 
     def test_init(self):
@@ -90,5 +173,7 @@ class SphereTest(TestCase):
         )
         
     def test_intersection(self):
-        # Need to implement this next
-        pass
+        self.assertSetEqual(
+            set(self.center_sphere.intersect(self.ray)),
+            set([1, 3])
+        )

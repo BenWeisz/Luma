@@ -35,12 +35,21 @@ class Plane(Entity):
         material: Material
     ) -> None:
         super().__init__(name)
-        self.point = point
-        self.normal = normal
+        self.point = np.array(point)
+        self.normal = np.array(normal)
         self.material = material
 
     def intersect(self, ray: Ray) -> List[float]:
-        return []
+        u = self.normal.dot(self.point - ray.start)
+        l = self.normal.dot(ray.end - ray.start)
+        
+        if u == 0 and l == 0:
+            return [np.inf]
+        elif l == 0:
+            return []
+        else:
+            return [u / l]
+        
 
 class Sphere(Entity):
     name: str
