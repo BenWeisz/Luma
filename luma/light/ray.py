@@ -1,4 +1,4 @@
-from typing import Tuple, Interable
+from typing import Iterable, Tuple
 import numpy as np
 
 from luma.util.geometry import asCoordinate, asHomogeneous
@@ -10,7 +10,7 @@ class Ray():
 
     def __init__(
         self,
-        screen_pos: Interable[int, int],
+        screen_pos: Iterable,
         start: np.array,
         end: np.array,
         camera_mat: np.array

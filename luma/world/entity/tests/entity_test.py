@@ -82,6 +82,7 @@ class PlaneTest(TestCase):
         )
 
         self.ray_inf_intersect = Ray(
+            screen_pos=(0, 0),
             start=[0, 0, 0],
             end=[1, 0, 0],
             camera_mat=camera_matrix
