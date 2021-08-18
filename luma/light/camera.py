@@ -51,6 +51,7 @@ class Camera(Entity):
                 y_p = (step_v / 2.0) + (y * step_v) - (self.screen_height / 2.0)
 
                 ray = Ray(
+                    screen_pos=(x, y),
                     start=np.array([0, 0, 0]),
                     end=np.array([x_p, y_p, self.focal_length]),
                     camera_mat=camera_mat
@@ -59,6 +60,14 @@ class Camera(Entity):
                 rays.append(ray)
 
         return rays
+
+    def render_frame(self):
+        """ Intersect each ray with all world objects. Compare
+            all intersections and set the corresponding pixel
+            to the closest intersection material.
+        """
+
+        pass
 
     @property
     def camera_matrix(self):

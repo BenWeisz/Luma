@@ -17,6 +17,7 @@ class RayTest(TestCase):
             screen_height=1,
         )
         self.ray = Ray(
+            screen_pos=(0, 0),
             start=np.array([0, 0, 0]),
             end=np.array([2, 0, 0]),
             camera_mat=self.camera.camera_matrix

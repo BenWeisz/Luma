@@ -68,12 +68,14 @@ class PlaneTest(TestCase):
         camera_matrix = self.camera.camera_matrix
 
         self.ray = Ray(
+            screen_pos=(0, 0),
             start=[2, 0, 0],
             end=[1, 0, 0],
             camera_mat=camera_matrix
         )
 
         self.ray_no_intersect = Ray(
+            screen_pos=(0, 0),
             start=[0, 0, 1],
             end=[2, 0, 1],
             camera_mat=camera_matrix
@@ -149,6 +151,7 @@ class SphereTest(TestCase):
         )
 
         self.ray = Ray(
+            screen_pos=(0, 0),
             start=[2, 0, 0],
             end=[1, 0, 0],
             camera_mat=self.camera.camera_matrix
