@@ -1,7 +1,7 @@
 name: Luma Tests
 on: [push]
 jobs:
-  Luma Tests:
+  luma_tests:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🔎 Running on branch ${{ github.ref }}"
