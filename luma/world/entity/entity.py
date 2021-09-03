@@ -9,4 +9,4 @@ class Entity:
         self.name = name
 
     def intersect(self, ray: Ray) -> List[float]:
-        pass
+        return []

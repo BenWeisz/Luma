@@ -4,6 +4,7 @@ import numpy as np
 from luma.world.entity.entity import Entity
 from luma.light.ray import Ray
 from luma.util.geometry import getRotationMatrix
+from luma.world.world import World
 
 class Camera(Entity):
     name: str
@@ -61,13 +62,25 @@ class Camera(Entity):
 
         return rays
 
-    def render_frame(self):
+    def render_frame(self, world: World) -> np.array:
         """ Intersect each ray with all world objects. Compare
             all intersections and set the corresponding pixel
             to the closest intersection material.
         """
 
-        pass
+        frame = np.zeros((int(self.screen_width), int(self.screen_height)))
+        rays_to_process = self.spawnCameraSpaceRays()
+        for ray in rays_to_process:
+            intersections = []
+            for ent in world.entities:
+                ent_ray_intersections = ent.intersect(ray)
+                ent_ray_intersections = map(lambda t: (t, ent), ent_ray_intersections)
+                intersections.extend(list(ent_ray_intersections))
+
+            # TODO Sort here
+
+    def intersect(self, ray: Ray) -> List[float]:
+        return super().intersect(ray)
 
     @property
     def camera_matrix(self):

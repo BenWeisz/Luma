@@ -76,4 +76,4 @@ class Sphere(Entity):
         a = d.dot(d)
         b = 2.0 * d.dot(m)
         c = m.dot(m) - self.radius**2
-        return list(np.roots([a, b, c]))
+        return filter(lambda x: np.isreal(x), np.roots([a, b, c]))

@@ -4,15 +4,15 @@
         {
             "type": "Sphere",
             "name": "Main Sphere",
-            "point": [0, 0, 1],
+            "point": [0, 0, 2],
             "radius": 1,
             "material": 1
         },
         {
             "type": "Plane",
             "name": "World Floor",
-            "point": [0, 0, 0],
-            "normal": [0, 0, 1],
+            "point": [0, -1, 0],
+            "normal": [0, 1, 0],
             "material": 2
         },
         {
