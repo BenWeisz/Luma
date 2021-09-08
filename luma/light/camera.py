@@ -83,7 +83,7 @@ class Camera(Entity):
                 ent_ray_intersections = map(lambda t: (t, ent), ent_ray_intersections)
                 intersections.extend(list(ent_ray_intersections))
 
-            ray.set_and_sort_intersections(intersections)
+            ray.set_intersections(Ray.prune_intersections(intersections))
             color = ray.get_intersection_color(world)
 
             screen_pos = ray.screen_pos
