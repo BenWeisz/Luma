@@ -13,7 +13,7 @@
         {
             "type": "DirectionalLight",
             "name": "Main Light",
-            "direction": [0, 0, 1],
+            "direction": [-1, -1, 1],
             "material": 0
         }
     ],

@@ -4,6 +4,8 @@ import numpy as np
 from luma.util.geometry import asCoordinate, asHomogeneous
 from luma.world.world import World
 
+DIRECTIONAL_LIGHT = "DirectionalLight"
+
 class Ray():
     start: np.array
     end: np.array
@@ -46,12 +48,27 @@ class Ray():
             t_point = self.get_point(t)
             normal = closest_body.get_normal(t_point)
             
-            color_ambient = (closest_body.material.i_ambient / 255.0) * 0.1
+            color_ambient = (closest_body.material.i_ambient / 255.0) * 0.25
             color_diffuse = np.zeros(3)
             for light in world.light_entities:
-                if light.__class__.__name__ == "DirectionalLight":
-                    color_diffuse += (closest_body.material.i_diffuse / 255.0) * (light.light.i_ambient / 255.0) * max([0, normal.dot(-light.direction)])
+                if light.__class__.__name__ == DIRECTIONAL_LIGHT:
+                    intensity = max([0, normal.dot(-light.direction)])
+                    color_diffuse += (closest_body.material.i_diffuse / 255.0) * (light.light.i_ambient / 255.0) * intensity
 
-            color = color_ambient + color_diffuse
+
+            viewing_dir = self.start - self.end
+            viewing_dir = viewing_dir / np.linalg.norm(viewing_dir)
+            viewing_dir *= -1
+
+            color_specular = np.zeros(3)
+            for light in world.light_entities:
+                if light.__class__.__name__ == DIRECTIONAL_LIGHT:
+                    #r = (2 * normal) + light.direction
+                    r = (2 * normal.dot(light.direction) * normal) - light.direction
+                    r = r / np.linalg.norm(r)
+                    intensity = max([0, r.dot(viewing_dir)])**20
+                    color_specular += (light.light.i_ambient / 255.0) * intensity
+
+            color = color_ambient + color_diffuse + color_specular
 
         return np.clip(color * 255.0, 0, 255)
