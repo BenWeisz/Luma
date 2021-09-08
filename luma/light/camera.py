@@ -83,15 +83,11 @@ class Camera(Entity):
                 ent_ray_intersections = map(lambda t: (t, ent), ent_ray_intersections)
                 intersections.extend(list(ent_ray_intersections))
 
-            intersections.sort(
-                reverse=False,
-                key=lambda x: x[0]
-            )
-            
+            ray.set_and_sort_intersections(intersections)
+            color = ray.get_intersection_color(world)
+
             screen_pos = ray.screen_pos
-            if len(intersections):
-                c = intersections[0][1].material.i_ambient
-                frame.setPixel(screen_pos[1], screen_pos[0], c)
+            frame.setPixel(screen_pos[1], screen_pos[0], color)
 
         return frame
 
