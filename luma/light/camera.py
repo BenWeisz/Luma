@@ -1,10 +1,11 @@
-from typing import Iterable, List
+from typing import Iterable, List, Tuple
 import numpy as np
 
 from luma.world.entity.entity import Entity
 from luma.light.ray import Ray
 from luma.util.geometry import getRotationMatrix
 from luma.world.world import World
+from luma.image.image import Image
 
 class Camera(Entity):
     name: str
@@ -53,8 +54,8 @@ class Camera(Entity):
 
                 ray = Ray(
                     screen_pos=(x, y),
-                    start=np.array([0, 0, 0]),
-                    end=np.array([x_p, y_p, self.focal_length]),
+                    start=np.array([0, 0, -self.focal_length]),
+                    end=np.array([x_p, y_p, 0]),
                     camera_mat=camera_mat
                 )
 
@@ -62,13 +63,18 @@ class Camera(Entity):
 
         return rays
 
-    def render_frame(self, world: World) -> np.array:
+    def render_frame(self, world: World) -> Image:
         """ Intersect each ray with all world objects. Compare
             all intersections and set the corresponding pixel
             to the closest intersection material.
         """
 
-        frame = np.zeros((int(self.screen_width), int(self.screen_height)))
+        frame = np.zeros((int(self.window_width), int(self.window_height), 3))
+        frame = Image(
+            height=self.window_height,
+            width=self.window_width
+        )
+
         rays_to_process = self.spawnCameraSpaceRays()
         for ray in rays_to_process:
             intersections = []
@@ -77,7 +83,17 @@ class Camera(Entity):
                 ent_ray_intersections = map(lambda t: (t, ent), ent_ray_intersections)
                 intersections.extend(list(ent_ray_intersections))
 
-            # TODO Sort here
+            intersections.sort(
+                reverse=False,
+                key=lambda x: x[0]
+            )
+            
+            screen_pos = ray.screen_pos
+            if len(intersections):
+                c = intersections[0][1].material.i_ambient
+                frame.setPixel(screen_pos[1], screen_pos[0], c)
+
+        return frame
 
     def intersect(self, ray: Ray) -> List[float]:
         return super().intersect(ray)

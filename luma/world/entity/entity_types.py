@@ -49,7 +49,6 @@ class Plane(Entity):
             return []
         else:
             return [u / l]
-        
 
 class Sphere(Entity):
     name: str

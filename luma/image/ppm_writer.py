@@ -13,7 +13,7 @@ class PPMWriter():
             image_data = []
             for y in range(image.height):
                 for x in range(image.width):
-                    pixel = image[y, x]
+                    pixel = image[image.height - 1 - y, x]
                     image_data.extend([
                         int(pixel[0]), 
                         int(pixel[1]), 
