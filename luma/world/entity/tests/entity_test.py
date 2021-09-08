@@ -29,7 +29,7 @@ class DirectionalLightTest(TestCase):
             "Test Directional Light"
         )
         self.assertListEqual(
-            self.directional_light.directon,
+            self.directional_light.direction,
             [1, 2, 3]
         )
         self.assertEqual(

@@ -75,9 +75,11 @@ class WorldReader():
     def parseLightEntity(entity: Dict, materials: List[Material]) -> LightEntity:
         entity_type = entity["type"]
         if entity_type == DirectionalLight.__name__:
+            direction = np.array(entity["direction"])
+            direction = direction / np.linalg.norm(direction)
             return DirectionalLight(
                 name=entity["name"],
-                direction=np.array(entity["direction"]),
+                direction=direction,
                 light=materials[entity["material"]],
             )
 

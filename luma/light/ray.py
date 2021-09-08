@@ -41,7 +41,17 @@ class Ray():
         """
 
         color = np.zeros(3)
-        if len(self.intersections):
-            color = self.intersections[0][1].material.i_ambient
+        if len(self.intersections):            
+            t, closest_body = self.intersections[0]    
+            t_point = self.get_point(t)
+            normal = closest_body.get_normal(t_point)
+            
+            color_ambient = (closest_body.material.i_ambient / 255.0) * 0.1
+            color_diffuse = np.zeros(3)
+            for light in world.light_entities:
+                if light.__class__.__name__ == "DirectionalLight":
+                    color_diffuse += (closest_body.material.i_diffuse / 255.0) * (light.light.i_ambient / 255.0) * max([0, normal.dot(-light.direction)])
 
-        return color
+            color = color_ambient + color_diffuse
+
+        return np.clip(color * 255.0, 0, 255)

@@ -1,7 +1,6 @@
 import numpy as np
 from typing import Iterable, List
 
-from luma.light.ray import Ray
 from luma.world.entity.entity import BodyEntity, LightEntity
 from luma.world.material import Material
 
@@ -16,7 +15,7 @@ class DirectionalLight(LightEntity):
         light: Material
     ) -> None:
         super().__init__(name, light)
-        self.directon = direction
+        self.direction = direction
 
 
 class Plane(BodyEntity):
@@ -35,7 +34,7 @@ class Plane(BodyEntity):
         self.point = np.array(point)
         self.normal = np.array(normal)
 
-    def intersect(self, ray: Ray) -> List[float]:
+    def intersect(self, ray: 'Ray') -> List[float]:
         u = self.normal.dot(self.point - ray.start)
         l = self.normal.dot(ray.end - ray.start)
         
@@ -66,7 +65,7 @@ class Sphere(BodyEntity):
         self.radius = radius
         self.material = material
 
-    def intersect(self, ray: Ray) -> List[float]:
+    def intersect(self, ray: 'Ray') -> List[float]:
         d = ray.end - ray.start
         m = ray.start - self.point
 
