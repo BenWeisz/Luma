@@ -95,9 +95,6 @@ class Camera(Entity):
 
         return frame
 
-    def intersect(self, ray: Ray) -> List[float]:
-        return super().intersect(ray)
-
     @property
     def camera_matrix(self):
         """ Generate the camera matrix corresponding
