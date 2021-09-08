@@ -54,10 +54,13 @@ class WorldReader():
     def parseBodyEntity(entity: Dict, materials: List[Material]) -> BodyEntity:
         entity_type = entity["type"]
         if entity_type == Plane.__name__:
+            normal = np.array(entity["normal"])
+            normal = normal / np.linalg.norm(normal)
+
             return Plane(
                 name=entity["name"],
                 point=np.array(entity["point"]),
-                normal=np.array(entity["normal"]),
+                normal=normal,
                 material=materials[entity["material"]],
             )
         elif entity_type == Sphere.__name__:

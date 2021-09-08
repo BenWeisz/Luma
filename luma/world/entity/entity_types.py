@@ -47,7 +47,7 @@ class Plane(BodyEntity):
             return [u / l]
 
     def get_normal(self, point: np.array) -> np.array:
-        pass
+        return self.normal
 
 class Sphere(BodyEntity):
     name: str
@@ -76,4 +76,5 @@ class Sphere(BodyEntity):
         return filter(lambda x: np.isreal(x), np.roots([a, b, c]))
 
     def get_normal(self, point: np.array) -> np.array:
-        pass
+        normal = point - self.point
+        return normal / np.linalg.norm(normal)
