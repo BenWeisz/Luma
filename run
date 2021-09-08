@@ -3,7 +3,7 @@ then
     if [ $1 = "app" ]
     then
         python -B main.py
-    elif [ $1 = "test" ]
+    elif [ $1 = "tests" ]
     then
         python -B -m unittest discover -p "*_test.py" -v
     fi
