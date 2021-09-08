@@ -48,6 +48,7 @@ class WorldReader():
             i_ambient=np.array(material["i_ambient"]),
             i_diffuse=np.array(material["i_diffuse"]),
             i_specular=np.array(material["i_specular"]),
+            phong_coeff=material["phong_coeff"],
         )
 
     @staticmethod

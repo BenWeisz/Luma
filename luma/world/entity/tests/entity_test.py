@@ -11,7 +11,8 @@ def get_test_material():
         name="Test Material",
         i_ambient=[255, 0, 0],
         i_diffuse=[0, 255, 0],
-        i_specular=[0, 0, 255]
+        i_specular=[0, 0, 255],
+        phong_coeff=1
     )
 
 class DirectionalLightTest(TestCase):

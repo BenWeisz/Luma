@@ -42,21 +42,24 @@
             "id": 0,
             "i_ambient": [255, 255, 255],
             "i_diffuse": [255, 255, 255],
-            "i_specular": [255, 255, 255]
+            "i_specular": [255, 255, 255],
+            "phong_coeff": 1
         },
         {
             "name": "Blue",
             "id": 1,
             "i_ambient": [0, 0, 255],
             "i_diffuse": [0, 0, 255],
-            "i_specular": [0, 0, 255]
+            "i_specular": [0, 0, 255],
+            "phong_coeff": 20
         },
         {
             "name": "Yellow",
             "id": 2,
             "i_ambient": [255, 255, 0],
             "i_diffuse": [255, 255, 0],
-            "i_specular": [255, 255, 0]
+            "i_specular": [255, 255, 0],
+            "phong_coeff": 1
         }
     ]
 }

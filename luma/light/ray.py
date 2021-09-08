@@ -80,7 +80,7 @@ class Ray():
                     #r = (2 * normal) + light.direction
                     r = (2 * normal.dot(light.direction) * normal) - light.direction
                     r = r / np.linalg.norm(r)
-                    intensity = max([0, r.dot(viewing_dir)])**20
+                    intensity = max([0, r.dot(viewing_dir)])**closest_body.material.phong_coeff
                     color_specular += (light.light.i_ambient / 255.0) * intensity
 
             color = color_ambient
