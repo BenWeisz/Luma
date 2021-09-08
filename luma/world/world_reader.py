@@ -2,7 +2,7 @@ import json
 from typing import Dict, List
 import numpy as np
 
-from luma.world.entity.entity import Entity
+from luma.world.entity.entity import BodyEntity, LightEntity
 from luma.world.entity.entity_types import Plane, Sphere, DirectionalLight
 from luma.world.material import Material
 from luma.light.camera import Camera
@@ -21,12 +21,23 @@ class WorldReader():
                 new_material = WorldReader.parseMaterial(material=material)
                 world.addMaterial(new_material)
 
-            for entity in json_data["entities"]:
-                new_entity = WorldReader.parseEntity(
-                    entity=entity,
+            for e in json_data["body_entities"]:
+                body_entity = WorldReader.parseBodyEntity(
+                    entity=e,
                     materials=world.materials
                 )
-                world.addEntity(new_entity)
+                world.addBodyEntity(body_entity)
+
+            for e in json_data["light_entities"]:
+                light_entity = WorldReader.parseLightEntity(
+                    entity=e,
+                    materials=world.materials
+                )
+                world.addLightEntity(light_entity)
+
+            for c in json_data["cameras"]:
+                camera = WorldReader.parseCamera(c)
+                world.addCamera(camera)
 
         return world
 
@@ -40,7 +51,7 @@ class WorldReader():
         )
 
     @staticmethod
-    def parseEntity(entity: Dict, materials: List[Material]) -> Entity:
+    def parseBodyEntity(entity: Dict, materials: List[Material]) -> BodyEntity:
         entity_type = entity["type"]
         if entity_type == Plane.__name__:
             return Plane(
@@ -56,20 +67,26 @@ class WorldReader():
                 radius=entity["radius"],
                 material=materials[entity["material"]],
             )
-        elif entity_type == DirectionalLight.__name__:
+
+    @staticmethod
+    def parseLightEntity(entity: Dict, materials: List[Material]) -> LightEntity:
+        entity_type = entity["type"]
+        if entity_type == DirectionalLight.__name__:
             return DirectionalLight(
                 name=entity["name"],
                 direction=np.array(entity["direction"]),
-                material=materials[entity["material"]],
+                light=materials[entity["material"]],
             )
-        elif entity_type == Camera.__name__:
-            return Camera(
-                name="Main Camera",
-                point=np.array(entity["point"]),
-                xzx=np.array(entity["xzx"]),
-                focal_length=entity["focalLength"],
-                window_width=entity["windowWidth"],
-                window_height=entity["windowHeight"],
-                screen_width=entity["screenWidth"],
-                screen_height=entity["screenHeight"],
-            )
+
+    @staticmethod
+    def parseCamera(entity: Dict) -> Camera:
+        return Camera(
+            name="Main Camera",
+            point=np.array(entity["point"]),
+            xzx=np.array(entity["xzx"]),
+            focal_length=entity["focalLength"],
+            window_width=entity["windowWidth"],
+            window_height=entity["windowHeight"],
+            screen_width=entity["screenWidth"],
+            screen_height=entity["screenHeight"],
+        )

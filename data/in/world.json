@@ -1,19 +1,23 @@
 {
     "name": "Test World",
-    "entities": [
+    "body_entities": [
         {
             "type": "Sphere",
             "name": "Main Sphere",
             "point": [0, 0, 2],
             "radius": 1,
             "material": 1
-        },
+        }
+    ],
+    "light_entities": [
         {
             "type": "DirectionalLight",
             "name": "Main Light",
             "direction": [0, 0, 1],
             "material": 0
-        },
+        }
+    ],
+    "cameras": [
         {
             "type": "Camera",
             "point": [0, 0, 0],

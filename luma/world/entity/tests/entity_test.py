@@ -20,7 +20,7 @@ class DirectionalLightTest(TestCase):
         self.directional_light = DirectionalLight(
             name="Test Directional Light",
             direction=[1, 2, 3],
-            material=self.material
+            light=self.material
         )
 
     def test_init(self):
@@ -33,7 +33,7 @@ class DirectionalLightTest(TestCase):
             [1, 2, 3]
         )
         self.assertEqual(
-            self.directional_light.material,
+            self.directional_light.light,
             self.material
         )
 

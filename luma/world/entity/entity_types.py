@@ -2,30 +2,27 @@ import numpy as np
 from typing import Iterable, List
 
 from luma.light.ray import Ray
-from luma.world.entity.entity import Entity
+from luma.world.entity.entity import BodyEntity, LightEntity
 from luma.world.material import Material
 
-class DirectionalLight(Entity):
+class DirectionalLight(LightEntity):
     name: str
     direction: Iterable
-    material: Material
 
     def __init__(
         self,
         name: str,
         direction: Iterable,
-        material: Material
+        light: Material
     ) -> None:
-        super().__init__(name)
+        super().__init__(name, light)
         self.directon = direction
-        self.material = material
 
 
-class Plane(Entity):
+class Plane(BodyEntity):
     name: str
     point: Iterable
     normal: Iterable
-    material: Material
 
     def __init__(
         self,
@@ -34,10 +31,9 @@ class Plane(Entity):
         normal: Iterable,
         material: Material
     ) -> None:
-        super().__init__(name)
+        super().__init__(name, material)
         self.point = np.array(point)
         self.normal = np.array(normal)
-        self.material = material
 
     def intersect(self, ray: Ray) -> List[float]:
         u = self.normal.dot(self.point - ray.start)
@@ -50,11 +46,13 @@ class Plane(Entity):
         else:
             return [u / l]
 
-class Sphere(Entity):
+    def get_normal(self, point: np.array) -> np.array:
+        pass
+
+class Sphere(BodyEntity):
     name: str
     point: Iterable
     radius: float
-    material: Material
 
     def __init__(
         self,
@@ -63,7 +61,7 @@ class Sphere(Entity):
         radius: float,
         material: Material
     ) -> None:
-        super().__init__(name)
+        super().__init__(name, material)
         self.point = point
         self.radius = radius
         self.material = material
@@ -76,3 +74,6 @@ class Sphere(Entity):
         b = 2.0 * d.dot(m)
         c = m.dot(m) - self.radius**2
         return filter(lambda x: np.isreal(x), np.roots([a, b, c]))
+
+    def get_normal(self, point: np.array) -> np.array:
+        pass

@@ -1,4 +1,4 @@
-from typing import Iterable, List, Tuple
+from typing import Iterable, List
 import numpy as np
 
 from luma.world.entity.entity import Entity
@@ -78,7 +78,7 @@ class Camera(Entity):
         rays_to_process = self.spawnCameraSpaceRays()
         for ray in rays_to_process:
             intersections = []
-            for ent in world.entities:
+            for ent in world.body_entities:
                 ent_ray_intersections = ent.intersect(ray)
                 ent_ray_intersections = map(lambda t: (t, ent), ent_ray_intersections)
                 intersections.extend(list(ent_ray_intersections))
